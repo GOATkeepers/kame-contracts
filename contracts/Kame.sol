@@ -14,7 +14,7 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
   Kora[] public kora;
 
   constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
-      // push a null kora in space 0
+      // initialize Kora[]
       Kora memory nullKora = Kora({
         metadata: bytes32(0),
         minter: msg.sender,
