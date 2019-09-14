@@ -43,6 +43,10 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
     return(k.metadata, k.minter, k.mainnetLock);
   }
 
+  function tokensOfOwner(address owner) public view returns (uint256[] memory) {
+    return _tokensOfOwner(owner);
+  }
+
   function lockToMainnet (uint256 id) public onlyOwner returns(bool) {
     if (kora[id].mainnetLock = true) {
       return true;
