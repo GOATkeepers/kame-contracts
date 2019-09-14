@@ -26,7 +26,7 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
 
   function mintKora (bytes32 metadata) public returns(bool, uint256) {
     address minter = msg.sender;
-    uint256 newTokenId = kora.length++;
+    uint256 newTokenId = kora.length;
     Kora memory newKora = Kora({
       metadata: metadata,
       minter: minter,
