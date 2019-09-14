@@ -5,10 +5,6 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721Mintable.sol"
 import "../node_modules/@openzeppelin/contracts/ownership/Ownable.sol";
 
 contract Kame is ERC721Full, ERC721Mintable, Ownable {
-  constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
-      // solhint-disable-previous-line no-empty-blocks
-    }
-
   struct Kora {
     bytes32 metadata;
     address minter;
@@ -17,12 +13,16 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
 
   Kora[] public kora;
 
-  // TODO: check that each of these should be in the OpenZeppelin contracts
-  // burn
-  // register admin
-  // register minter
-  // buy
-  // transfer
+  constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
+      // push a null kora in space 0
+      Kora memory nullKora = Kora({
+        metadata: bytes32(0),
+        minter: msg.sender,
+        mainnetLock: false
+      });
+      mint(msg.sender, 0);
+      kora.push(nullKora);
+    }
 
   function mintKora (bytes32 metadata) public returns(bool, uint256) {
     address minter = msg.sender;
