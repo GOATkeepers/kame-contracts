@@ -18,11 +18,12 @@
  *
  */
 
-// const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('truffle-hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+const mnemonic = process.env.ETH_MNEMONIC || ''
 
 module.exports = {
   /**
@@ -46,6 +47,14 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
+    },
+    kamedev: {
+      provider: (() => {
+        return new HDWalletProvider(mnemonic, process.env.KAME_DEV_RPC)
+      }),
+      type: "quorum",
+      gasPrice: 0,
+      network_id: '*' // Match any network id
     },
 
     // Another network with more advanced options...
