@@ -12,9 +12,10 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
   }
 
   Kora[] public kora;
+  mapping (bytes32 => uint256) public hashToId;
 
   constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
-      // initialize Kora[]
+      // initialize kora[]
       Kora memory nullKora = Kora({
         metadata: bytes32(0),
         minter: msg.sender,
@@ -34,6 +35,7 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
     });
     if (mint(minter, newTokenId) == true) {
       kora.push(newKora);
+      hashToId[metadata] = newTokenId;
       return (true, newTokenId);
     } else return (false, 0);
   }
