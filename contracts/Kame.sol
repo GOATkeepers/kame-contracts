@@ -12,6 +12,7 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
   }
 
   Kora[] public kora;
+  address _v2Contract = address(0);
 
   constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
       // initialize Kora[]
@@ -55,6 +56,13 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
       return true;
     }
   }
+
+  function updateContract (address v2Contract) public onlyOwner {
+    _v2Contract = v2Contract;
+    emit emitV2Contract(_v2Contract);
+  }
+
+  event emitV2Contract (address indexed v2Contract);
 
   function () external payable {}
 }
