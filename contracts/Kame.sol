@@ -50,7 +50,10 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
   function lockToMainnet (uint256 id) public onlyOwner returns(bool) {
     if (kora[id].mainnetLock = true) {
       return true;
-    } else return false;
+    } else {
+      kora[id].mainnetLock = true;
+      return true;
+    }
   }
 
   function () external payable {}
