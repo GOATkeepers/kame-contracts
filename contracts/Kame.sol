@@ -25,6 +25,9 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
       kora.push(nullKora);
     }
 
+  // KORA
+  /* @dev this section handles logic for minting Kora. It also has wrappers for intrinsic
+    ERC721 functions that are provided by the imported OpenZeppelin libraries. */
   function mintKora (bytes32 metadata) public returns(bool, uint256) {
     address minter = msg.sender;
     uint256 newTokenId = kora.length;
@@ -48,6 +51,8 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
     return _tokensOfOwner(owner);
   }
 
+  /* @dev When a user intends to make a Kora available on a secondary market, we want
+    our side chain to treat it as having been exported from the Kame service. */
   function lockToMainnet (uint256 id) public onlyOwner returns(bool) {
     if (kora[id].mainnetLock = true) {
       return true;
@@ -55,6 +60,13 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
       kora[id].mainnetLock = true;
       return true;
     }
+  }
+
+  // Contracts
+  struct ReserveIssueContracts {
+    address reserveIssueContract;
+    uint256 reserveIssueContractId;
+    uint8 reserveIssueContractClass;
   }
 
   function updateContract (address v2Contract) public onlyOwner {
