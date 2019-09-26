@@ -2,9 +2,10 @@ pragma solidity ^0.5.0;
 
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721Full.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721Mintable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721MetadataMintable.sol";
 import "../node_modules/@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract Kame is ERC721Full, ERC721Mintable, Ownable {
+contract Kame is ERC721Full, ERC721Mintable, Ownable, ERC721MetadataMintable {
   struct Kora {
     bytes32 metadata;
     address minter;
@@ -13,9 +14,10 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
 
   Kora[] public kora;
   address _v2Contract = address(0);
+  mapping (bytes32 => uint256) public hashToId;
 
   constructor (string memory name, string memory symbol) public ERC721Full(name, symbol) {
-      // initialize Kora[]
+      // initialize kora[]
       Kora memory nullKora = Kora({
         metadata: bytes32(0),
         minter: msg.sender,
@@ -24,17 +26,18 @@ contract Kame is ERC721Full, ERC721Mintable, Ownable {
       mint(msg.sender, 0);
       kora.push(nullKora);
     }
-
-  function mintKora (bytes32 metadata) public returns(bool, uint256) {
+  function mintKora (uint256 potentialId, bytes32 metadata, string memory tokenURI) public returns(bool, uint256) {
+    uint256 newTokenId = totalSupply();
+    require(potentialId == newTokenId, "Kame: potentialId is offset incorrectly. Doesn't match new available ID.");
     address minter = msg.sender;
-    uint256 newTokenId = kora.length;
     Kora memory newKora = Kora({
       metadata: metadata,
       minter: minter,
       mainnetLock: false
     });
-    if (mint(minter, newTokenId) == true) {
+    if (mintWithTokenURI(minter, newTokenId, tokenURI) == true) {
       kora.push(newKora);
+      hashToId[metadata] = newTokenId;
       return (true, newTokenId);
     } else return (false, 0);
   }
