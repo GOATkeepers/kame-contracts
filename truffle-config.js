@@ -62,7 +62,7 @@ module.exports = {
       }),
       type: "quorum",
       gasPrice: 0,
-      network_id: 1337 // Match any network id
+      network_id: 1336 // Match any network id
     },
 
     // Another network with more advanced options...
