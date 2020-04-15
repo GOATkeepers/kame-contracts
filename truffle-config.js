@@ -54,7 +54,7 @@ module.exports = {
       }),
       type: "quorum",
       gasPrice: 0,
-      network_id: 1337 // Match any network id
+      network_id: 1337
     },
     kamedev: {
       provider: (() => {
@@ -62,7 +62,15 @@ module.exports = {
       }),
       type: "quorum",
       gasPrice: 0,
-      network_id: 1336 // Match any network id
+      network_id: 1336
+    },
+    kamelocal: {
+      provider: (() => {
+        return new HDWalletProvider(mnemonic, 'http://localhost:22000')
+      }),
+      type: "quorum",
+      gasPrice: 0,
+      network_id: 10
     },
 
     // Another network with more advanced options...
