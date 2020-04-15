@@ -5,8 +5,9 @@
 var Public = artifacts.require("Shells");
 
 const name = "Shells";
-const symbol = "SHL";  // Bradley!
+const symbol = "SHL";
+const supply = 10000000;
 
 module.exports = function(deployer) {
-  deployer.deploy(Public, name, symbol);
+  deployer.deploy(Public, name, symbol, supply);
 };
